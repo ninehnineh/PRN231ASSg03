@@ -1,0 +1,23 @@
+﻿@using Microsoft.AspNetCore.Http
+@using Newtonsoft.Json
+@using eStore.Models.CartVMs
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@{
+    var session = HttpContextAccessor.HttpContext.Session;
+    string jsoncart = session.GetString(eStore.Controllers.CartController.CARTKEY);
+    if (jsoncart != null)
+    {
+        var cart = JsonConvert.DeserializeObject<List<CartItem>>(jsoncart);
+        <a class="nav-link" asp-action="Index" asp-controller="Cart">
+            Cart(@cart.Count)
+        </a>
+    }
+    else
+    {
+        <a class="nav-link" asp-action="Index" asp-controller="Cart">
+            Cart
+        </a>
+    }
+}
